@@ -54,6 +54,31 @@ gtm-extractor/
 
 # Installation
 
+# Verify Node.js Installation
+
+Check Node.js is installed:
+
+```bash
+node -v
+```
+
+Check npm is installed:
+
+```bash
+npm -v
+```
+
+If these commands fail, install Node.js from:
+
+```text
+https://nodejs.org/
+```
+
+Recommended version:
+- Node.js 18+
+
+---
+
 Clone the repository:
 
 ```bash
