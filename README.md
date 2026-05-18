@@ -10,6 +10,19 @@ This repository helps you:
 
 ---
 
+# Prerequisites
+
+Before using this tool, ensure you have:
+
+- Git installed
+- Node.js installed
+- Access to a Google Tag Manager account
+- A Google Cloud project
+- Google Tag Manager API enabled
+- OAuth Desktop App credentials
+
+---
+
 # Features
 
 - OAuth-based GTM authentication
