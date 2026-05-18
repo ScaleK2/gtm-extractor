@@ -1,0 +1,29 @@
+{
+  "name": "gtm-extractor",
+  "version": "1.0.0",
+  "description": "Standalone Google Tag Manager extractor for exporting containers, tags, triggers, variables, and workspace metadata.",
+  "main": "src/gtm-export.js",
+  "scripts": {
+    "start": "node src/gtm-export.js",
+    "export": "node src/gtm-export.js",
+    "to-sheets": "node src/gtm-to-sheets-v2.js",
+    "split-sheets": "node src/gtm-per-container-simple.js",
+    "test": "echo \"No tests configured yet\"",
+    "export:xlsx": "node src/gtm-to-excel.js"
+  },
+  "keywords": [
+    "gtm",
+    "google-tag-manager",
+    "tagging",
+    "analytics",
+    "audit",
+    "export"
+  ],
+  "author": "Kyle",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "googleapis": "^144.0.0",
+    "xlsx": "^0.18.5"
+  }
+}

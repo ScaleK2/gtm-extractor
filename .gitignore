@@ -1,0 +1,33 @@
+node_modules/
+.env
+
+# Secrets
+secrets/
+oauth-client.json
+oauth-token.json
+sheets-token.json
+token.json
+*-token.json
+
+# Outputs
+output/
+hars/
+gtm_exports/
+gtm_excel
+*.har
+*.zip
+*.log
+
+# Client/source data
+urls.txt
+url_details.tsv
+skipped.txt
+gtm-progress.json
+har-progress.json
+config.json
+gtm-container-index.xlsx
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
