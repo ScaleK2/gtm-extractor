@@ -52,8 +52,6 @@ gtm-extractor/
 
 ---
 
-# Installation
-
 # Verify Node.js Installation
 
 Check Node.js is installed:
@@ -78,6 +76,8 @@ Recommended version:
 - Node.js 18+
 
 ---
+
+# Installation
 
 Clone the repository:
 
