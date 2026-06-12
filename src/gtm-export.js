@@ -30,6 +30,11 @@ const ACCOUNT_IDS = (process.env.GTM_ACCOUNT_IDS || '')
   .map(id => id.trim())
   .filter(Boolean);
 
+const CONTAINER_IDS = (process.env.GTM_CONTAINER_IDS || '')
+  .split(',')
+  .map(id => id.trim())
+  .filter(Boolean);
+
 const SCOPES = ['https://www.googleapis.com/auth/tagmanager.readonly'];
 
 function validateConfig() {
@@ -46,6 +51,13 @@ function validateConfig() {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   fs.mkdirSync(path.dirname(PROGRESS_FILE), { recursive: true });
   fs.mkdirSync(path.dirname(GOOGLE_TOKEN_PATH), { recursive: true });
+}
+
+function selectedContainer(container) {
+  if (CONTAINER_IDS.length === 0) return true;
+
+  return CONTAINER_IDS.includes(container.containerId) ||
+    CONTAINER_IDS.includes(container.publicId);
 }
 
 function safeName(str) {
@@ -318,10 +330,19 @@ async function run() {
     );
 
     const containers = containerList.container || [];
+    const selectedContainers = containers.filter(selectedContainer);
 
-    console.log(`Found ${containers.length} containers.\n`);
+    console.log(`Found ${containers.length} containers.`);
 
-    for (const container of containers) {
+    if (CONTAINER_IDS.length > 0) {
+      console.log(
+        `GTM_CONTAINER_IDS filter active: exporting ${selectedContainers.length} matching containers.\n`
+      );
+    } else {
+      console.log('No GTM_CONTAINER_IDS filter set: exporting every container in this account.\n');
+    }
+
+    for (const container of selectedContainers) {
       await exportContainer(auth, accountId, container, progress);
     }
   }
