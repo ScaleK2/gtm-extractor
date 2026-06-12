@@ -26,6 +26,11 @@ const CONTAINER_INDEX_OUTPUT_PATH = path.resolve(
   process.env.GTM_CONTAINER_INDEX_OUTPUT_PATH || './output/gtm-container-index.xlsx'
 );
 
+const CONTAINER_IDS = (process.env.GTM_CONTAINER_IDS || '')
+  .split(',')
+  .map(id => id.trim())
+  .filter(Boolean);
+
 const EXCEL_CELL_LIMIT = 32000;
 
 const INDEX_HEADERS = [
@@ -134,15 +139,26 @@ function flattenObject(obj, prefix = '', context = {}, truncationLog = []) {
   return output;
 }
 
+function selectedContainerFolder(folder) {
+  if (CONTAINER_IDS.length === 0) return true;
+
+  const container = readJsonIfExists(path.join(folder, 'container.json'));
+
+  return CONTAINER_IDS.includes(container?.containerId) ||
+    CONTAINER_IDS.includes(container?.publicId);
+}
+
 function getContainerFolders() {
   if (!fs.existsSync(GTM_EXPORT_DIR)) {
     throw new Error(`GTM export directory not found: ${GTM_EXPORT_DIR}`);
   }
 
-  return fs
+  const folders = fs
     .readdirSync(GTM_EXPORT_DIR, { withFileTypes: true })
     .filter(entry => entry.isDirectory())
     .map(entry => path.join(GTM_EXPORT_DIR, entry.name));
+
+  return folders.filter(selectedContainerFolder);
 }
 
 function getFeature(container, key) {
@@ -413,6 +429,10 @@ function main() {
   const folders = getContainerFolders();
 
   console.log(`Found ${folders.length} GTM container export folders.`);
+
+  if (CONTAINER_IDS.length > 0) {
+    console.log(`GTM_CONTAINER_IDS filter active: ${CONTAINER_IDS.join(', ')}`);
+  }
 
   for (const folder of folders) {
     exportContainerWorkbook(folder);

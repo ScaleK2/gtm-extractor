@@ -9,7 +9,8 @@
     "to-sheets": "node src/gtm-to-sheets-v2.js",
     "split-sheets": "node src/gtm-per-container-simple.js",
     "test": "echo \"No tests configured yet\"",
-    "export:xlsx": "node src/gtm-to-excel.js"
+    "export:xlsx": "node src/gtm-to-excel.js",
+    "menu": "node src/run.js"
   },
   "keywords": [
     "gtm",
